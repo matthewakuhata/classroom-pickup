@@ -1,0 +1,40 @@
+.header {
+  display: flex;
+  align-items: center;
+  height: 3rem;
+  padding: 1rem;
+  color: var(--white-color);
+  background-color: var(--accent-color);
+
+  h2 {
+    align-items: center;
+    margin: 0;
+    display: flex;
+
+    a:hover {
+      text-decoration: none;
+    }
+  }
+
+  nav {
+    margin: auto;
+
+    a {
+      &:hover {
+        text-decoration: underline;
+      }
+    }
+  }
+
+  a {
+    margin: 0.5rem;
+    &:link {
+      color: var(--white-color);
+      text-decoration: none;
+    }
+
+    &:visited {
+      color: var(--white-color);
+    }
+  }
+}
