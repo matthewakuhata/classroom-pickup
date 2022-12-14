@@ -1,0 +1,48 @@
+.student {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  gap: 0.5rem;
+  text-align: left;
+  padding: 0.5rem;
+  border-radius: 5px;
+  border: 1px solid var(--grey-color);
+  margin-block: 1rem;
+  transition: all 0.2s ease-in-out;
+
+  input {
+    border-color: red;
+    font: inherit;
+    width: 1.15rem;
+    height: 1.15rem;
+    border-radius: 0.15rem;
+    accent-color: var(--black-color);
+    cursor: pointer;
+  }
+
+  label {
+    flex-grow: 1;
+  }
+
+  &:hover {
+    background-color: rgba(184, 184, 184, 0.091);
+  }
+
+  &.student--highlight {
+    border: 2px solid var(--accent-color);
+    font-weight: bold;
+  }
+
+  &.student--disabled {
+    background-color: rgba(184, 184, 184, 0.091);
+
+    input:hover {
+      cursor: not-allowed;
+    }
+  }
+
+  &.student--green {
+    background-color: rgba(91, 236, 62, 0.207);
+  }
+
+}
