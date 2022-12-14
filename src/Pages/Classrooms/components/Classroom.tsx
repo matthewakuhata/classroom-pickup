@@ -16,6 +16,11 @@ interface ClassroomProps {
 
 const Classroom = ({ students, registration }: ClassroomProps) => {
   const [pickedUp, setPickedUp] = useState(0);
+
+  const beenPickedUpHandler = (val: number) => {
+    setPickedUp((prev) => prev + val);
+  };
+
   return (
     <div className="classroom">
       <div className="classroom__heading">
@@ -34,6 +39,7 @@ const Classroom = ({ students, registration }: ClassroomProps) => {
               student.registrations.findIndex((val) => val === registration) >=
               0
             }
+            onChangeHandler={beenPickedUpHandler}
           />
         ))}
       </ul>
