@@ -15,10 +15,18 @@ const Student = ({ name, isActive, id, onChangeHandler }: StudentProps) => {
     setIsChecked(event.target.checked);
     onChangeHandler(event.target.checked ? 1 : -1);
   };
+
   return (
+    <div
+      className={`student
+      ${isActive ? !isChecked && "student--highlight" : "student--disabled"}
+      ${isChecked && "student--green"}`}
+    >
       <BsPersonCircle size={20} />
       <label htmlFor={`student-checkbox-${id}`}>{name}</label>
       <input
+        disabled={!isActive}
+        onChange={onChange}
         id={`student-checkbox-${id}`}
         type="checkbox"
       />
