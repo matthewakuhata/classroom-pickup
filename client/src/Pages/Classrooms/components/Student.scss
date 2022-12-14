@@ -35,8 +35,13 @@
 
   &.student--disabled {
     background-color: rgba(184, 184, 184, 0.091);
+    cursor: not-allowed;
 
     input:hover {
+      cursor: not-allowed;
+    }
+
+    label {
       cursor: not-allowed;
     }
   }

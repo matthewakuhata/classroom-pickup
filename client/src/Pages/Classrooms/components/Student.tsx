@@ -1,6 +1,10 @@
 import { useState } from "react";
+import { Tooltip } from "react-tooltip";
 import { BsPersonCircle } from "react-icons/bs";
+
+import "react-tooltip/dist/react-tooltip.css";
 import "./Student.scss";
+
 interface StudentProps {
   name: string;
   isActive: boolean;
@@ -17,20 +21,31 @@ const Student = ({ name, isActive, id, onChangeHandler }: StudentProps) => {
   };
 
   return (
-    <div
-      className={`student
+    <>
+      <div
+        className={`student
       ${isActive ? !isChecked && "student--highlight" : "student--disabled"}
       ${isChecked && "student--green"}`}
-    >
-      <BsPersonCircle size={20} />
-      <label htmlFor={`student-checkbox-${id}`}>{name}</label>
-      <input
-        disabled={!isActive}
-        onChange={onChange}
-        id={`student-checkbox-${id}`}
-        type="checkbox"
-      />
-    </div>
+        id={"student-" + id + name}
+      >
+        <BsPersonCircle size={20} />
+        <label htmlFor={`student-checkbox-${id}`}>{name}</label>
+        <input
+          id={`student-checkbox-${id}`}
+          disabled={!isActive}
+          onChange={onChange}
+          type="checkbox"
+        />
+      </div>
+      {!isActive && (
+        <Tooltip
+          delayShow={500}
+          anchorId={"student-" + id + name}
+          place="top"
+          content="Please search for a valid registration to unlock"
+        />
+      )}
+    </>
   );
 };
 
