@@ -1,0 +1,17 @@
+.classroom {
+  display: flex;
+  flex-direction: column;
+  margin: 1rem;
+  padding: 2rem;
+  border-radius: 5px;
+  border: 1px solid var(--grey-color);
+  // min-width: 350px;
+
+  h2 {
+    margin: 0;
+  }
+
+  ul {
+    padding: 0;
+  }
+}
