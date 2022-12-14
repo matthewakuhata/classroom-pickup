@@ -1,6 +1,5 @@
 import { useRef, useState } from "react";
 import { BsSearch } from "react-icons/bs";
-import { MdClear } from "react-icons/md";
 
 import Classroom from "./components/Classroom";
 
