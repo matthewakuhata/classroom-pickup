@@ -1,13 +1,9 @@
-import Student from "./Student";
-
-import "./Classroom.scss";
 import { useState } from "react";
 
-export type StudentType = {
-  id: string;
-  name: string;
-  registrations: string[];
-};
+import Student from "./Student";
+import { StudentType } from "../types";
+
+import "./Classroom.scss";
 
 interface ClassroomProps {
   students: StudentType[];
@@ -36,8 +32,7 @@ const Classroom = ({ students, registration }: ClassroomProps) => {
             name={student.name}
             id={student.id}
             isActive={
-              student.registrations.findIndex((val) => val === registration) >=
-              0
+              student.cars.findIndex((val) => val === registration) >= 0
             }
             onChangeHandler={beenPickedUpHandler}
           />
