@@ -1,58 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import { useRef, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import { useFetchData } from "../../shared/hooks/useFetchData";
 
-import { StudentType } from "../Classrooms/components/Classroom";
+import { StudentType } from "../Classrooms/types";
 
 import "./Registration.scss";
 
 const Registrations = () => {
-  const [registeredVehicles, setRegisteredVehicles] = useState<string[]>([]);
-  const [students, setStudents] = useState<StudentType[]>([]);
+  const navigate = useNavigate();
+  const { data: students, loading: studentsLoading } =
+    useFetchData<StudentType[]>("/api/v1/student");
+  const { data: licencesPlates, loading: licencesPlatesLoading } = useFetchData<
+    string[]
+  >("/api/v1/car/options");
+
   const [licenceError, setLicenceError] = useState("");
-  const [studentError, setStudentError] = useState(false);
+  const [studentError, setStudentError] = useState("");
 
   const licenceRef = useRef<HTMLInputElement>(null);
   const studentsRef = useRef<any>(null);
 
-  useEffect(() => {
-    const fetchRegistrations = async () => {
-      setRegisteredVehicles(["QS0KZH2", "Q3AWT67", "O10ET9K"]);
-    };
-
-    const fetchStudents = async () => {
-      setStudents([
-        {
-          name: "Jon Doe",
-          id: "1",
-          registrations: ["Q3AWT67"],
-        },
-        {
-          name: "Miriam Fairburn ",
-          id: "2",
-          registrations: ["QS0KZH2"],
-        },
-        {
-          name: "Dorthy Jack",
-          id: "3",
-          registrations: ["NV37L4O"],
-        },
-        {
-          name: "Humphrey Chance",
-          id: "4",
-          registrations: ["Q3AWT67", "O10ET9K"],
-        },
-        {
-          name: "Linden Wolf",
-          id: "5",
-          registrations: ["940Z895", "TKDY153"],
-        },
-      ]);
-    };
-
-    fetchRegistrations();
-    fetchStudents();
-  }, []);
-
+  // Use custom hook & useReducer for formState & validation
   const addRegisteredVehicleHandler = () => {
     if (!licenceRef.current || !studentsRef.current) return;
     const licence = licenceRef.current.value;
@@ -74,7 +43,7 @@ const Registrations = () => {
     if (!licence) {
       setLicenceError("Please Enter a valid licence plate");
       isValid = false;
-    } else if (registeredVehicles.findIndex((veh) => veh === licence) >= 0) {
+    } else if (licencesPlates.findIndex((plate) => plate === licence) >= 0) {
       setLicenceError(
         "Licence plate already registered! Please enter a new one."
       );
@@ -82,12 +51,16 @@ const Registrations = () => {
     }
 
     if (!students) {
-      setStudentError(true);
+      setStudentError("Please select at least one student!");
       isValid = false;
     }
 
     return isValid;
   };
+
+  if (studentsLoading || licencesPlatesLoading) {
+    return <div>Loading State...</div>;
+  }
 
   return (
     <div className="registration">
@@ -107,7 +80,8 @@ const Registrations = () => {
       <div className="registration__students">
         <label htmlFor="related-students">Students</label>
         <Select
-          onChange={() => !!studentError && setStudentError(false)}
+          aria-label="related-students"
+          onChange={() => !!studentError && setStudentError("")}
           className={`registration__student__select   ${
             studentError && "registration--error"
           }`}
@@ -121,12 +95,15 @@ const Registrations = () => {
           }))}
         />
         {studentError && (
-          <span className="registration__error-message">
-            Please select at least one student!
-          </span>
+          <span className="registration__error-message">{studentError}</span>
         )}
       </div>
-      <button onClick={addRegisteredVehicleHandler}>Register</button>
+      <button
+        disabled={!!licenceError || !!studentError}
+        onClick={addRegisteredVehicleHandler}
+      >
+        Register
+      </button>
     </div>
   );
 };
