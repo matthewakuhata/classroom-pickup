@@ -6,6 +6,7 @@ import { useFetchData } from "../../shared/hooks/useFetchData";
 import { ClassroomType, SeenPlates } from "./types";
 
 import "./Classrooms.scss";
+import LoadingBar from "../../shared/components/LoadingBar/LoadingBar";
 
 const Classrooms = () => {
   const { data: classrooms, loading } =
@@ -57,7 +58,7 @@ const Classrooms = () => {
       </div>
       {error && <span className="classrooms__error-message">{error}</span>}
       {loading ? (
-        <div>Loading...</div>
+        <LoadingBar />
       ) : (
         <div className="classrooms-container">
           {classrooms &&

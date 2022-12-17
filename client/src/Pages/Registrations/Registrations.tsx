@@ -1,6 +1,7 @@
 import { useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import Select from "react-select";
+import LoadingBar from "../../shared/components/LoadingBar/LoadingBar";
 import { useFetchData } from "../../shared/hooks/useFetchData";
 
 import { StudentType } from "../Classrooms/types";
@@ -73,7 +74,7 @@ const Registrations = () => {
   };
 
   if (studentsLoading || licencesPlatesLoading) {
-    return <div>Loading State...</div>;
+    return <LoadingBar />;
   }
 
   return (
