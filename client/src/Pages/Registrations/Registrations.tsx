@@ -24,18 +24,32 @@ const Registrations = () => {
   // Use custom hook & useReducer for formState & validation
   const addRegisteredVehicleHandler = () => {
     if (!licenceRef.current || !studentsRef.current) return;
+
     const licence = licenceRef.current.value;
     const selectedStudent = studentsRef.current
       .getValue()
       .map((obj: { label: string; value: string }) => obj.value) as string[];
 
-    // Use useReducer for formState & validation
     if (!validateInputs(licence, selectedStudent.length)) return;
-
-    console.log(licence, studentsRef);
-    // send request here!
-    licenceRef.current.value = "";
-    studentsRef.current.setValue([]);
+    fetch("/api/v1/car", {
+      method: "POST",
+      headers: {
+        Accept: "application/json",
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        licencePlate: licence,
+        students: selectedStudent,
+      }),
+    })
+      .then((res) => {
+        if (res.ok) {
+          navigate("/");
+        } else {
+          alert("Something went wrong! Please try again");
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   const validateInputs = (licence: string, students: number) => {
