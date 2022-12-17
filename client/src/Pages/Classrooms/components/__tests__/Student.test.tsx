@@ -53,5 +53,3 @@ describe("TESTING Student component", () => {
     });
   });
 });
-
-// test('The component should match snapshot', () => { second })

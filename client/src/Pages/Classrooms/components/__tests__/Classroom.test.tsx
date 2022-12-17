@@ -6,13 +6,19 @@ const STUDENTS = [
   {
     name: "Linden Wolf",
     id: "5",
-    registrations: ["940Z895", "TKDY153"],
+    cars: ["940Z895", "TKDY153"],
     classroomId: 1,
   },
   {
     name: "Doyle Bryce",
     id: "6",
-    registrations: ["940Z895"],
+    cars: ["940Z895"],
+    classroomId: 1,
+  },
+  {
+    name: "Matthew A",
+    id: "7",
+    cars: ["VEDFGT4"],
     classroomId: 1,
   },
 ];
@@ -51,6 +57,40 @@ describe("TESTING Classroom", () => {
 
         await userEvent.click(checkbox);
         expect(checkbox).toBeChecked();
+      });
+    });
+
+    describe("WHEN selecting some students", () => {
+      test("THEN the number of student that have been pickedup increases", async () => {
+        render(<Classroom students={STUDENTS} registration={"940Z895"} />);
+
+        const checkbox1 = screen.getByRole("checkbox", { name: "Linden Wolf" });
+        const checkbox2 = screen.getByRole("checkbox", { name: "Doyle Bryce" });
+        const pickedup = screen.getByText(/picked up/i);
+        expect(pickedup).toHaveTextContent("0 / 3");
+
+        await userEvent.click(checkbox1);
+        expect(pickedup).toHaveTextContent("1 / 3");
+
+        await userEvent.click(checkbox2);
+        expect(pickedup).toHaveTextContent("2 / 3");
+      });
+    });
+
+    describe("WHEN deselecting some students", () => {
+      test("THEN the number of student that have been pickedup decreases", async () => {
+        render(<Classroom students={STUDENTS} registration={"940Z895"} />);
+
+        const checkbox1 = screen.getByRole("checkbox", { name: "Linden Wolf" });
+        const checkbox2 = screen.getByRole("checkbox", { name: "Doyle Bryce" });
+        const pickedup = screen.getByText(/picked up/i);
+        await userEvent.click(checkbox1);
+        await userEvent.click(checkbox2);
+
+        expect(pickedup).toHaveTextContent("2 / 3");
+
+        await userEvent.click(checkbox2);
+        expect(pickedup).toHaveTextContent("1 / 3");
       });
     });
   });

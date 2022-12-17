@@ -14,7 +14,7 @@ exports[`TESTING Classroom GIVEN a class room with registration input WHEN rende
       <span>
         0
          / 
-        2
+        3
          Picked up
       </span>
     </div>
@@ -25,6 +25,7 @@ exports[`TESTING Classroom GIVEN a class room with registration input WHEN rende
         class="student
       student--highlight
       false"
+        id="student-5Linden Wolf"
       >
         <svg
           fill="currentColor"
@@ -57,6 +58,7 @@ exports[`TESTING Classroom GIVEN a class room with registration input WHEN rende
         class="student
       student--disabled
       false"
+        id="student-6Doyle Bryce"
       >
         <svg
           fill="currentColor"
@@ -83,6 +85,40 @@ exports[`TESTING Classroom GIVEN a class room with registration input WHEN rende
         <input
           disabled=""
           id="student-checkbox-6"
+          type="checkbox"
+        />
+      </div>
+      <div
+        class="student
+      student--disabled
+      false"
+        id="student-7Matthew A"
+      >
+        <svg
+          fill="currentColor"
+          height="20"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 16 16"
+          width="20"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"
+          />
+          <path
+            d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"
+            fill-rule="evenodd"
+          />
+        </svg>
+        <label
+          for="student-checkbox-7"
+        >
+          Matthew A
+        </label>
+        <input
+          disabled=""
+          id="student-checkbox-7"
           type="checkbox"
         />
       </div>
