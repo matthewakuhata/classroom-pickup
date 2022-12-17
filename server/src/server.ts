@@ -3,6 +3,7 @@ import express, { Express } from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
 import api from "./routes/api";
+import path from "path";
 import * as dotenv from "dotenv";
 
 dotenv.config();
@@ -30,19 +31,16 @@ server.use((req, res, next) => {
  */
 server.use("/api/v1/", api);
 
-// server.use(express.static(path.join(__dirname, "../../client/build")));
+server.use(express.static(path.join(__dirname, "../../client/build")));
 
-// server.get("*", (req, res) => {
-//   res.sendFile(path.resolve(__dirname, "build", "index.html"));
-// });
+server.get("*", (req, res) => {
+  res.sendFile(path.resolve(__dirname, "build", "index.html"));
+});
 
 const httpServer = http.createServer(server);
-console.log(process.env.MONGO_API_CONNECT);
 
 mongoose
-  .connect(
-    "mongodb+srv://admin:admin@mern-app.mliam.mongodb.net/student-pickup?retryWrites=true&w=majority"
-  )
+  .connect(process.env.MONGO_API_CONNECT || "")
   .then(() => {
     console.log("Connected to MongoDB");
 
