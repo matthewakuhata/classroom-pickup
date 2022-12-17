@@ -1,53 +1,104 @@
 import { screen, render } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { BrowserRouter } from "react-router-dom";
 import Registrations from "../Registrations";
-
-const STUDENTS = [
-  {
-    name: "Linden Wolf",
-    id: "5",
-    registrations: ["940Z895", "TKDY153"],
-    classroomId: 1,
-  },
-  {
-    name: "Doyle Bryce",
-    id: "6",
-    registrations: ["940Z895"],
-    classroomId: 1,
-  },
-];
 
 describe("TESTING Registrations", () => {
   describe("GIVEN a registration with no errors", () => {
-    describe("WHEN clicking register without entering a licence plate", () => {
-      test("THEN an error is shown", async () => {
-        render(<Registrations />);
+    describe("WHEN clicking register without entering a licence plate or students", () => {
+      test("THEN an error is shown for both fields and register is disabled", async () => {
+        render(<Registrations />, { wrapper: BrowserRouter });
 
-        expect(1).toBe(1);
+        const studentInput = await screen.findByRole("combobox", {
+          name: /related-students/i,
+        });
+        const licenceInput = await screen.findByRole("textbox", {
+          name: "Licence Plate",
+        });
+        const registerButton = await screen.findByRole("button", {
+          name: /Register/i,
+        });
+
+        userEvent.clear(studentInput);
+        userEvent.clear(licenceInput);
+        userEvent.click(registerButton);
+
+        expect(registerButton).toBeDisabled();
+
+        const errorTextStudent = screen.getByText(
+          /Please select at least one student!/i
+        );
+        const errorTextPlate = screen.getByText(
+          /Please Enter a valid licence plate/i
+        );
+        expect(registerButton).toBeDisabled();
+        expect(errorTextStudent).toBeInTheDocument();
+        expect(errorTextPlate).toBeInTheDocument();
       });
     });
 
     describe("WHEN clicking register with a licence plate that is already registered", () => {
       test("THEN an error is shown", async () => {
-        render(<Registrations />);
+        render(<Registrations />, { wrapper: BrowserRouter });
+        const registeredPlate = "TKDY153";
 
-        expect(1).toBe(1);
-      });
-    });
+        const licenceInput = await screen.findByRole("textbox", {
+          name: "Licence Plate",
+        });
+        const registerButton = await screen.findByRole("button", {
+          name: /Register/i,
+        });
 
-    describe("WHEN clicking register with no students selected", () => {
-      test("THEN an error is shown", async () => {
-        render(<Registrations />);
+        userEvent.type(licenceInput, registeredPlate);
+        userEvent.click(registerButton);
 
-        expect(1).toBe(1);
+        const errorTextPlate = screen.getByText(
+          /Licence plate already registered! Please enter a new one./i
+        );
+
+        expect(errorTextPlate).toBeInTheDocument();
       });
     });
   });
 
   describe("GIVEN valid inputs", () => {
     describe("WHEN clicking register button", () => {
-      test("THEN the request is sent and user is redirected to home page", () => {
-        expect(1).toEqual(1);
+      test("THEN the request is sent and no errors occured", async () => {
+        render(
+          <BrowserRouter>
+            <Registrations />
+          </BrowserRouter>
+        );
+
+        const newPlate = "QASDFY7";
+        const licenceInput = await screen.findByRole("textbox", {
+          name: "Licence Plate",
+        });
+        const registerButton = await screen.findByRole("button", {
+          name: /Register/i,
+        });
+
+        const studentInput = await screen.findByRole("combobox", {
+          name: /related-students/i,
+        });
+
+        userEvent.type(studentInput, "Linden Wolf{enter}");
+        userEvent.type(licenceInput, newPlate);
+        userEvent.click(registerButton);
+
+        const errorTextPlate1 = screen.queryByText(
+          /Licence plate already registered! Please enter a new one./i
+        );
+        const errorTextPlate2 = screen.queryByText(
+          /Please Enter a valid licence plate/i
+        );
+        const errorTextStudent = screen.queryByText(
+          /Please select at least one student!/i
+        );
+
+        expect(errorTextPlate1).not.toBeInTheDocument();
+        expect(errorTextPlate2).not.toBeInTheDocument();
+        expect(errorTextStudent).not.toBeInTheDocument();
       });
     });
   });
