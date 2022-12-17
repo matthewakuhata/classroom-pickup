@@ -33,6 +33,7 @@ const createClassroom = async (
       throw new HttpError("Name field is required", 400);
     }
 
+    // should be validating each student id
     const createdClassroom = new Classroom({
       name,
       students: students || [],

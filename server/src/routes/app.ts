@@ -5,7 +5,10 @@ import classroomRouter from "./classroom.routes";
 import carRouter from "./car.routes";
 import HttpError from "../utils/http-error";
 
+const app = express();
+
 const api = express.Router();
+
 api.use(express.json());
 
 api.use("/student", studentRouter);
@@ -35,4 +38,6 @@ api.use((error: HttpError, _: Request, res: Response, next: NextFunction) => {
   res.json({ message: error.message });
 });
 
-export default api;
+app.use(api);
+
+export default app;

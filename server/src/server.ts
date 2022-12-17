@@ -2,7 +2,7 @@ import http from "http";
 import express, { Express } from "express";
 import mongoose from "mongoose";
 import morgan from "morgan";
-import api from "./routes/api";
+import app from "./routes/app";
 import path from "path";
 import * as dotenv from "dotenv";
 
@@ -29,7 +29,7 @@ server.use((req, res, next) => {
 /**
  * API Version 1
  */
-server.use("/api/v1/", api);
+server.use("/api/v1/", app);
 
 server.use(express.static(path.join(__dirname, "../../client/build")));
 
