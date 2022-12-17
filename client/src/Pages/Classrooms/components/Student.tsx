@@ -1,5 +1,4 @@
 import { useState } from "react";
-import { Tooltip } from "react-tooltip";
 import { BsPersonCircle } from "react-icons/bs";
 
 import "react-tooltip/dist/react-tooltip.css";
@@ -37,14 +36,6 @@ const Student = ({ name, isActive, id, onChangeHandler }: StudentProps) => {
           type="checkbox"
         />
       </div>
-      {!isActive && (
-        <Tooltip
-          delayShow={500}
-          anchorId={"student-" + id + name}
-          place="top"
-          content="Please search for a valid registration to unlock"
-        />
-      )}
     </>
   );
 };
