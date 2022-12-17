@@ -1,4 +1,5 @@
 import { AiFillCar } from "react-icons/ai";
+import { Link } from "react-router-dom";
 import "./Header.scss";
 
 const Header = () => {
@@ -10,8 +11,8 @@ const Header = () => {
         </h2>
       </a>
       <nav>
-        <a href="/">Classrooms</a>
-        <a href="/registration">Registrations</a>
+        <Link to="/">Classrooms</Link>
+        <Link to="/registration">Registrations</Link>
       </nav>
     </header>
   );
