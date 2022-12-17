@@ -31,6 +31,16 @@
     border: none;
     background-color: var(--accent-color);
     color: var(--white-color);
+
+    &:disabled {
+      background-color: var(--grey-color);
+      cursor: not-allowed;
+    }
+
+    &:hover {
+      background-color: #348aa7ba;
+      cursor: pointer;
+    }
   }
 
   label {
