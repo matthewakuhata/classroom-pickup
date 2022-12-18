@@ -10,6 +10,9 @@ export const handlers = [
   rest.post("/api/v1/car", (req, res, ctx) => {
     return res(ctx.status(201));
   }),
+  rest.patch("/api/v1/student", (req, res, ctx) => {
+    return res(ctx.status(200));
+  }),
   rest.get("/api/v1/student", (req, res, ctx) => {
     return res(
       ctx.json([
