@@ -106,3 +106,105 @@ describe("TESTING GET /student", () => {
     });
   });
 });
+
+describe("TESTING PUT /student", () => {
+  describe("GIVEN a valid students id and some updated fields", () => {
+    describe("WHEN calling PUT /student", () => {
+      test("THEN 200 response is returned with the student id", async () => {
+        const classroom = new Classroom({
+          name: "Test Classroom A",
+          students: [],
+        });
+        await classroom.save();
+
+        const newClassroom = new Classroom({
+          name: "Test Classroom B",
+          students: [],
+        });
+        await newClassroom.save();
+
+        const student = new Student({
+          name: "Jonny",
+          classroom: classroom.id,
+        });
+        await student.save();
+
+        const updatedInfo = {
+          id: student.id,
+          name: "Jon",
+          classroomId: newClassroom.id,
+        };
+        const response = await request(app).patch("/student").send(updatedInfo);
+
+        expect(response.statusCode).toEqual(200);
+        expect(response.body.id).toEqual(student.id);
+
+        const updatedStudent = await Student.findById(student.id);
+        expect(updatedStudent?.name).toEqual(updatedInfo.name);
+        expect(updatedStudent?.classroom.toString()).toEqual(
+          updatedInfo.classroomId
+        );
+      });
+    });
+  });
+
+  describe("GIVEN an invalid classroomId", () => {
+    describe("WHEN calling PUT /student", () => {
+      test("THEN 400 response is returned", async () => {
+        const classroom = new Classroom({
+          name: "Test Classroom A",
+          students: [],
+        });
+        await classroom.save();
+
+        const newClassroom = new Classroom({
+          name: "Test Classroom B",
+          students: [],
+        });
+
+        const student = new Student({
+          name: "Jonny",
+          classroom: classroom.id,
+        });
+        await student.save();
+
+        const updatedInfo = {
+          id: student.id,
+          name: "Jon",
+          classroomId: newClassroom.id,
+        };
+        const response = await request(app).patch("/student").send(updatedInfo);
+
+        expect(response.statusCode).toEqual(400);
+        expect(response.body.message).toEqual("Could not find classroom");
+      });
+    });
+  });
+
+  describe("GIVEN an invalid studentId", () => {
+    describe("WHEN calling PUT /student", () => {
+      test("THEN 400 response is returned", async () => {
+        const classroom = new Classroom({
+          name: "Test Classroom A",
+          students: [],
+        });
+        await classroom.save();
+
+        const student = new Student({
+          name: "Jonny",
+          classroom: classroom.id,
+        });
+
+        const updatedInfo = {
+          id: student.id,
+          name: "Jon",
+          classroomId: classroom.id,
+        };
+        const response = await request(app).patch("/student").send(updatedInfo);
+
+        expect(response.statusCode).toEqual(400);
+        expect(response.body.message).toEqual("Could not find student");
+      });
+    });
+  });
+});

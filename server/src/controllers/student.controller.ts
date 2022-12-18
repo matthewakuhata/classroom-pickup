@@ -64,4 +64,37 @@ const createStudent = async (
   }
 };
 
-export default { listStudents, createStudent };
+const updateStudent = async (
+  req: TypedBodyRequest<{
+    id: ObjectId;
+    name: string;
+    registrations: string[];
+    classroomId: ObjectId;
+  }>,
+  res: Response,
+  next: NextFunction
+) => {
+  const { id, name, registrations, classroomId } = req.body;
+
+  try {
+    const classroom = await Classroom.findById(classroomId);
+    if (!classroom) {
+      throw new HttpError("Could not find classroom", 400);
+    }
+
+    const student = await Student.findByIdAndUpdate(id, {
+      name,
+      cars: registrations,
+      classroom: classroomId,
+    });
+    if (!student) {
+      throw new HttpError("Could not find student", 400);
+    }
+
+    res.status(200).json({ id: student.id });
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export default { listStudents, createStudent, updateStudent };

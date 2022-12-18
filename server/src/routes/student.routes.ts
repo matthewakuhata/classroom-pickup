@@ -5,5 +5,6 @@ const router = express.Router();
 
 router.get("/", studentController.listStudents);
 router.post("/", studentController.createStudent);
+router.patch("/", studentController.updateStudent);
 
 export default router;
