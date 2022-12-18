@@ -14,7 +14,7 @@
     <img src="images/logo.png" alt="Logo" width="80" height="80">
   </a>
 
-<h3 align="center">project_title</h3>
+<h3 align="center">Student Pickup</h3>
 
   <p align="center">
     project_description
@@ -64,15 +64,11 @@ Single student B - J0UJ2D7
 
 <p align="right">(<a href="#top">back to top</a>)</p>
 
-<!-- ROADMAP -->
-
 ## TODOs
 
 - [] Add tooltip on student row.
 - [] Extract formState and Validation.
 - [] Create Reusable form components.
-- [] Unit test Backend code
-
-See the [open issues](https://github.com/github_username/repo_name/issues) for a full list of proposed features (and known issues).
+- [x] Unit test Backend code
 
 <p align="right">(<a href="#top">back to top</a>)</p>
