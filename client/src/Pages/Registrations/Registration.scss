@@ -38,7 +38,7 @@
     }
 
     &:hover {
-      background-color: #348aa7ba;
+      background-color: var(--accent-hover);
       cursor: pointer;
     }
   }
@@ -57,5 +57,11 @@
   .registration--error {
     border: 1px solid red;
     border-radius: 5px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .registration {
+    width: 80%;
   }
 }

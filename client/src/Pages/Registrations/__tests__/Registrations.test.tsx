@@ -8,7 +8,6 @@ describe("TESTING Registrations", () => {
     describe("WHEN clicking register without entering a licence plate or students", () => {
       test("THEN an error is shown for both fields and register is disabled", async () => {
         render(<Registrations />, { wrapper: BrowserRouter });
-
         const studentInput = await screen.findByRole("combobox", {
           name: /related-students/i,
         });
