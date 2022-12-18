@@ -1,4 +1,4 @@
-import "./styles.css";
+import "./styles.scss";
 const LoadingBar = () => {
   return (
     <div className="lds-roller">
