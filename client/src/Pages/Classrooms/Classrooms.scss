@@ -1,85 +1,70 @@
 .classrooms {
-  padding: 1rem;
+  padding: 2rem;;
 
   .classrooms__search {
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .clear-icon {
-      position: relative;
-      left: -50px;
-      color: rgb(227, 23, 23);
-    }
-
-    button {
-      background-color: var(--black-color);
-      border: 1px solid var(--black-color);
-      color: var(--white-color);
-      border: none;
-      border-top-right-radius: 3px;
-      border-bottom-right-radius: 3px;
-      padding: calc(0.25rem);
-      font-size: 1rem;
-
-      &:hover {
-        background-color: var(--black-hover);
-        cursor: pointer;
-      }
-    }
-
     input {
-      padding: 0.25rem;
-      font-size: 1rem;
-      min-width: 200px;
+      padding: 0.5rem;
+      font-size: 1.25rem;
+      min-width: 400px;
       background-color: var(--white-color);
-      border: 1px solid var(--grey-color);
-      border-top-left-radius: 3px;
-      border-bottom-left-radius: 3px;
+      border: none;
+      border-bottom: 1px solid var(--grey-color);
 
       &:focus {
         outline: none;
       }
 
       &.error {
-        border: 1px solid red;
+        border-bottom: 1px solid red;
+        color: red;
       }
     }
   }
 
-  .classrooms__error-message {
-    color: red;
-    font-size: 0.75rem;
-  }
-
-  .classrooms__reset-button {
-    max-width: 8rem;
-    padding: .5rem;
-    border-radius: 5px;
-    border: none;
+  button {
     background-color: var(--accent-color);
     color: var(--white-color);
+    justify-content: center;
+    border: none;
+    padding: calc(0.5rem);
+    font-size: 1rem;
+    border-radius: 3px;
+    display: flex;
 
-    &:disabled {
-      background-color: var(--grey-color);
-      cursor: not-allowed;
+    &.classrooms__reset-button{
+      margin-left: auto;
     }
 
     &:hover {
-      background-color: #348aa7ba;
+      background-color: var(--accent-hover);
       cursor: pointer;
     }
+  }
+
+
+  .classrooms__error-message {
+    color: red;
+    font-size: 0.75rem;
   }
 }
 
 .classrooms-container {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  // justify-items: spac;
+  gap: 1.5rem;
+  margin-block: 1.5rem;
 }
 
-@media screen and (max-width: 1000px) {
+@media screen and (max-width: 800px) {
   .classrooms-container {
     grid-template-columns: 1fr;
+  }
+
+  .classrooms__search input{
+    min-width: 200px !important;
   }
 }

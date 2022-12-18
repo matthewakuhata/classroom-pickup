@@ -54,6 +54,7 @@ const Classrooms = () => {
         />
         <button aria-label="search" onClick={searchHandler}>
           <BsSearch />
+          Search
         </button>
       </div>
       {error && <span className="classrooms__error-message">{error}</span>}
